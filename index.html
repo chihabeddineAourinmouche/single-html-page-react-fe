@@ -1,0 +1,115 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Single-HTML-Page React Card List App</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding-top: 50px;
+			padding-bottom: 50px;
+			font-family: Helvetica, Arial, sans-serif;
+			user-select: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="root"> </div>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+	<!-- REACT HOOKS -->
+	<script>
+		const useState = React.useState;
+	</script>
+	<!-- DATA GOES HERE -->
+	<script>
+		const cardsData = [
+			{ firstName: "Marie", lastName: "Curie" },
+			{ firstName: "Isaac", lastName: "Newton" },
+			{ firstName: "Charles", lastName: "Darwin" },
+			{ firstName: "Galileo", lastName: "Galilei" },
+			{ firstName: "Nikola", lastName: "Tesla" },
+			{ firstName: "Alan", lastName: "Turing" },
+			{ firstName: "Niels", lastName: "Bohr" },
+			{ firstName: "Albert", lastName: "Einstein" },
+		];
+	</script>
+	<!-- COMPONENTS HERE -->
+	<script type="text/babel">
+		const Card = ({ firstName, lastName }) => {
+			const [hovered, setHovered] = useState(false)
+
+			const onMouseOverCallback = () => {
+				setHovered(true)
+			}
+			const onMouseOutCallback = () => {
+				setHovered(false)
+			}
+
+			return (
+				<a
+					href={`https://en.wikipedia.org/wiki/${firstName}_${lastName}`}
+					target="_blank"
+					style={{
+						backgroundColor: hovered ? "#f8f8f8" : "#ffffff",
+						width: "300px",
+						height: "150px",
+						padding: "10px",
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+						color: "#000000",
+						textDecoration: "none",
+						borderRadius: "20px",
+						boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+						transition: "all .2s",
+					}}
+					onMouseOver={onMouseOverCallback}
+					onMouseOut={onMouseOutCallback}
+				>
+					{firstName} {lastName.toUpperCase()}
+				</a>
+			);
+		};
+
+		const CardList = () => {
+			return (
+				<div style={{
+					width: "630px",
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "flex-start",
+					gap: "10px",
+					rowGap: "10px",
+					flexWrap: "wrap",
+				}}>
+					{cardsData.map((card, index) => (
+						<Card key={index} firstName={card.firstName} lastName={card.lastName} />
+					))}
+				</div>
+			);
+		};
+	</script>
+	<!-- MAIN -->
+	<script type="text/babel">
+		ReactDOM.render(<CardList />, document.getElementById('root'));
+	</script>
+</body>
+
+</html>
